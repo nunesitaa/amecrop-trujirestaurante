@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Restaurante Trujillo — Alta Cocina Mediterránea</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #f5f0e8;
+  --dark: #1a1410;
+  --gold: #c9a84c;
+  --gold-light: #e8c97d;
+  --warm-grey: #8a7d6b;
+  --rust: #b5451b;
+  --bg-section: #0d0b08;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Cormorant Garamond', serif;
+  background: var(--dark);
+  color: var(--cream);
+  overflow-x: hidden;
+}
+
+/* ===== NAV ===== */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.2rem 4rem;
+  background: rgba(15, 12, 8, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+  transition: all 0.3s;
+}
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  text-decoration: none;
+}
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--cream); text-decoration: none;
+  opacity: 0.8; transition: opacity 0.3s, color 0.3s;
+}
+.nav-links a:hover { opacity: 1; color: var(--gold); }
+
+/* Floating CTA */
+.floating-cta {
+  position: fixed; bottom: 2.5rem; right: 2.5rem; z-index: 999;
+  display: flex; flex-direction: column; gap: 0.8rem; align-items: flex-end;
+}
+.btn-float {
+  padding: 0.9rem 1.8rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+  border: none; cursor: pointer; text-decoration: none;
+  display: inline-block; text-align: center;
+  transition: all 0.3s;
+}
+.btn-float.primary {
+  background: var(--gold);
+  color: var(--dark);
+}
+.btn-float.primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(201,168,76,0.4); }
+.btn-float.secondary {
+  background: transparent;
+  color: var(--cream);
+  border: 1px solid rgba(245,240,232,0.4);
+}
+.btn-float.secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ===== HERO CAROUSEL ===== */
+#inicio { position: relative; height: 100vh; overflow: hidden; }
+
+.carousel {
+  position: relative; width: 100%; height: 100%;
+}
+.carousel-slide {
+  position: absolute; inset: 0;
+  opacity: 0; transition: opacity 1.2s ease;
+}
+.carousel-slide.active { opacity: 1; }
+.carousel-slide img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(0.55);
+}
+
+.hero-content {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: flex-start;
+  padding: 0 8rem;
+  z-index: 10;
+}
+.hero-eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1.2rem;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3.5rem, 8vw, 7rem);
+  line-height: 1.05; font-weight: 400;
+  max-width: 700px; margin-bottom: 1.5rem;
+}
+.hero-title em { font-style: italic; color: var(--gold-light); }
+.hero-sub {
+  font-size: 1.15rem; font-weight: 300;
+  color: rgba(245,240,232,0.75);
+  max-width: 420px; line-height: 1.7;
+}
+
+.carousel-dots {
+  position: absolute; bottom: 2.5rem; left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: 0.6rem; z-index: 10;
+}
+.dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(245,240,232,0.35); cursor: pointer;
+  transition: all 0.3s;
+}
+.dot.active { background: var(--gold); transform: scale(1.4); }
+
+/* ===== PLATO ESTRELLA ===== */
+#plato-estrella {
+  position: relative; height: 90vh;
+  display: flex; align-items: center;
+  overflow: hidden;
+}
+#plato-estrella .bg {
+  position: absolute; inset: 0;
+}
+#plato-estrella .bg img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(0.4);
+}
+.estrella-content {
+  position: relative; z-index: 2;
+  padding: 0 8rem;
+  max-width: 700px;
+}
+.tag {
+  display: inline-block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.65rem; font-weight: 600;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--gold); border: 1px solid var(--gold);
+  padding: 0.4rem 1rem; margin-bottom: 1.5rem;
+}
+.estrella-content h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 400; line-height: 1.1;
+  margin-bottom: 1.2rem;
+}
+.estrella-content h2 em { font-style: italic; color: var(--gold-light); }
+.estrella-content p {
+  font-size: 1.1rem; font-weight: 300;
+  line-height: 1.8; color: rgba(245,240,232,0.8);
+  margin-bottom: 2rem;
+}
+.price-tag {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem; color: var(--gold);
+}
+.price-tag span {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7rem; letter-spacing: 0.15em;
+  color: var(--warm-grey); text-transform: uppercase;
+  margin-left: 0.5rem;
+}
+
+/* ===== MENÚ ===== */
+#menu { padding: 7rem 4rem; background: var(--bg-section); }
+.section-header { text-align: center; margin-bottom: 4rem; }
+.section-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 400; margin-bottom: 0.8rem;
+}
+.section-header p {
+  font-size: 1rem; color: var(--warm-grey); font-weight: 300;
+}
+.divider {
+  width: 60px; height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  margin: 1.5rem auto;
+}
+
+.menu-btns {
+  display: flex; gap: 1.5rem; justify-content: center; margin-bottom: 4rem;
+  flex-wrap: wrap;
+}
+.btn-menu {
+  padding: 1rem 2.5rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+  cursor: pointer; text-decoration: none;
+  transition: all 0.3s;
+}
+.btn-menu.outlined {
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+}
+.btn-menu.outlined:hover { background: var(--gold); color: var(--dark); }
+.btn-menu.filled {
+  background: var(--gold);
+  color: var(--dark);
+  border: 1px solid var(--gold);
+}
+.btn-menu.filled:hover { background: var(--gold-light); }
+
+/* Tab system */
+.tab-content { animation: tabFadeIn 0.5s ease; }
+@keyframes tabFadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.btn-menu.active-tab.outlined {
+  background: rgba(201,168,76,0.12);
+  border-color: var(--gold-light);
+  color: var(--gold-light);
+}
+.btn-menu.active-tab.filled {
+  background: var(--gold-light);
+}
+
+/* Carta de vinos */
+.carta-vinos { padding: 0 0 2rem; }
+.vinos-intro {
+  text-align: center; max-width: 600px; margin: 0 auto 3.5rem;
+  font-size: 1rem; color: var(--warm-grey); line-height: 1.8; font-weight: 300;
+}
+.vinos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem 5rem; }
+.vino-cat-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem; font-weight: 400;
+  color: var(--gold); margin-bottom: 1.2rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(201,168,76,0.25);
+}
+.vino-list { display: flex; flex-direction: column; }
+.vino-item {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(245,240,232,0.06);
+  transition: padding-left 0.2s, background 0.2s;
+}
+.vino-item:hover { background: rgba(201,168,76,0.04); padding-left: 0.6rem; }
+.vino-info { display: flex; flex-direction: column; gap: 0.2rem; }
+.vino-nombre { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--cream); }
+.vino-origen {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.6rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--warm-grey);
+}
+.vino-precio {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; color: var(--gold);
+  white-space: nowrap; margin-left: 1.5rem; padding-top: 0.1rem;
+}
+
+/* Button animations */
+.btn-animated {
+  position: relative; overflow: hidden;
+}
+.btn-animated::before {
+  content: '';
+  position: absolute; top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+  transition: left 0.5s ease;
+}
+.btn-animated:hover::before { left: 100%; }
+.btn-animated:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(201,168,76,0.35);
+  letter-spacing: 0.22em;
+  transition: all 0.35s ease;
+}
+.btn-menu { transition: all 0.35s ease; }
+
+.mosaic {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
+  gap: 0;
+}
+.mosaic-item {
+  position: relative; overflow: hidden;
+  cursor: pointer;
+}
+.mosaic-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+.mosaic-item:nth-child(4) { grid-column: span 2; }
+.mosaic-item img {
+  width: 100%; height: 100%; min-height: 200px;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+  display: block;
+}
+.mosaic-item:hover img { transform: scale(1.07); }
+.mosaic-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(15,12,8,0.85) 0%, transparent 50%);
+  display: flex; align-items: flex-end; padding: 1.5rem;
+  opacity: 0; transition: opacity 0.4s;
+}
+.mosaic-item:hover .mosaic-overlay { opacity: 1; }
+.mosaic-overlay h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem; font-weight: 400;
+}
+.mosaic-overlay .mprice {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.75rem; color: var(--gold);
+  margin-top: 0.3rem;
+}
+
+/* ===== INSTALACIONES ===== */
+#instalaciones { padding: 7rem 4rem; }
+.gallery-lifestyle {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  grid-template-rows: 280px 280px;
+  gap: 12px;
+}
+.gallery-item { position: relative; overflow: hidden; }
+.gallery-item:first-child { grid-row: span 2; }
+.gallery-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s ease, filter 0.5s ease;
+}
+.gallery-item:hover img { transform: scale(1.05); filter: brightness(0.75); }
+.gallery-label {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 1.2rem 1.5rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(245,240,232,0.9);
+  transform: translateY(100%);
+  transition: transform 0.4s ease;
+}
+.gallery-item:hover .gallery-label { transform: translateY(0); }
+
+/* ===== COMUNIDAD ===== */
+#comunidad { padding: 7rem 4rem; background: var(--bg-section); }
+.insta-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin-top: 3rem;
+}
+.insta-item {
+  position: relative; overflow: hidden;
+  aspect-ratio: 1;
+}
+.insta-item img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.5s ease, filter 0.5s ease;
+}
+.insta-item:hover img { transform: scale(1.08); filter: brightness(0.6); }
+.insta-overlay {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  opacity: 0; transition: opacity 0.4s;
+  gap: 0.5rem;
+}
+.insta-item:hover .insta-overlay { opacity: 1; }
+.insta-overlay svg { width: 28px; height: 28px; fill: white; }
+.insta-overlay span {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.65rem; color: white;
+  letter-spacing: 0.1em;
+}
+
+/* ===== SOBRE NOSOTROS ===== */
+#sobre {
+  display: grid; grid-template-columns: 1fr 1fr;
+  min-height: 80vh;
+}
+.sobre-visual { position: relative; overflow: hidden; }
+.sobre-visual img {
+  width: 100%; height: 100%; object-fit: cover; min-height: 600px;
+  filter: brightness(0.8);
+}
+.sobre-content {
+  padding: 7rem 5rem;
+  display: flex; flex-direction: column; justify-content: center;
+  background: #120f0a;
+}
+.sobre-content h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 400; line-height: 1.2;
+  margin-bottom: 2rem;
+}
+.sobre-content h2 em { font-style: italic; color: var(--gold); }
+.sobre-content p {
+  font-size: 1rem; line-height: 1.9;
+  color: rgba(245,240,232,0.75);
+  font-weight: 300; margin-bottom: 1.2rem;
+}
+.valores {
+  display: flex; gap: 2rem; margin-top: 2rem;
+}
+.valor {
+  text-align: center;
+}
+.valor-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem; color: var(--gold);
+  display: block;
+}
+.valor-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.65rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--warm-grey);
+  margin-top: 0.3rem; display: block;
+}
+
+/* ===== EQUIPO ===== */
+#equipo { padding: 7rem 4rem; }
+.team-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2rem; margin-top: 3rem;
+}
+.team-card { position: relative; overflow: hidden; }
+.team-card img {
+  width: 100%; height: 420px; object-fit: cover;
+  filter: grayscale(30%);
+  transition: filter 0.5s, transform 0.5s;
+}
+.team-card:hover img { filter: grayscale(0%); transform: scale(1.03); }
+.team-info {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(201,168,76,0.3);
+}
+.team-info h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; font-weight: 400;
+  margin-bottom: 0.3rem;
+}
+.team-info span {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.65rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold);
+}
+.team-info p {
+  font-size: 0.9rem; color: var(--warm-grey);
+  line-height: 1.7; margin-top: 0.8rem; font-weight: 300;
+}
+
+/* ===== CONTACTO ===== */
+#contacto {
+  background: var(--bg-section);
+  padding: 7rem 4rem;
+}
+.contacto-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+}
+.contacto-info h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  font-weight: 400; margin-bottom: 2.5rem;
+}
+.info-block {
+  margin-bottom: 2rem;
+  padding-left: 1.5rem;
+  border-left: 2px solid var(--gold);
+}
+.info-block .label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.62rem; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--gold);
+  display: block; margin-bottom: 0.5rem;
+}
+.info-block p {
+  font-size: 1rem; line-height: 1.7;
+  color: rgba(245,240,232,0.8); font-weight: 300;
+}
+.info-block a {
+  color: var(--cream); text-decoration: none;
+  font-size: 1.1rem; display: block;
+  transition: color 0.3s;
+}
+.info-block a:hover { color: var(--gold); }
+
+table.horarios {
+  width: 100%; border-collapse: collapse; margin-top: 0.5rem;
+}
+table.horarios tr td {
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+  color: rgba(245,240,232,0.75);
+  font-weight: 300;
+}
+table.horarios tr td:last-child { text-align: right; color: var(--cream); }
+table.horarios tr:not(:last-child) td { border-bottom: 1px solid rgba(138,125,107,0.2); }
+
+.map-frame {
+  width: 100%; height: 280px; margin-top: 2rem;
+  border: 1px solid rgba(201,168,76,0.2);
+  filter: grayscale(40%) contrast(1.1);
+  transition: filter 0.5s;
+}
+.map-frame:hover { filter: grayscale(0%); }
+
+/* Form */
+.contacto-form { }
+.contacto-form h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem; font-weight: 400;
+  margin-bottom: 2rem;
+}
+.form-group { margin-bottom: 1.5rem; }
+.form-group label {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.62rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--warm-grey);
+  margin-bottom: 0.5rem;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  background: rgba(245,240,232,0.05);
+  border: 1px solid rgba(201,168,76,0.25);
+  color: var(--cream);
+  padding: 0.85rem 1rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--gold);
+}
+.form-group select option { background: var(--dark); }
+.form-group textarea { height: 110px; resize: vertical; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+.btn-submit {
+  width: 100%; padding: 1.1rem;
+  background: var(--gold); color: var(--dark);
+  border: none; cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  transition: all 0.3s;
+}
+.btn-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+/* ===== FOOTER ===== */
+footer {
+  padding: 3rem 4rem;
+  border-top: 1px solid rgba(201,168,76,0.15);
+  display: flex; justify-content: space-between; align-items: center;
+  background: #0a0806;
+}
+.footer-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem; color: var(--gold);
+  letter-spacing: 0.1em;
+}
+.footer-copy {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.62rem; letter-spacing: 0.15em;
+  color: var(--warm-grey);
+}
+.footer-social { display: flex; gap: 1.5rem; }
+.footer-social a {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--warm-grey); text-decoration: none;
+  transition: color 0.3s;
+}
+.footer-social a:hover { color: var(--gold); }
+
+/* ===== ANIMATIONS ===== */
+.fade-up {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 900px) {
+  nav { padding: 1rem 2rem; }
+  .nav-links { display: none; }
+  .hero-content { padding: 0 3rem; }
+  #sobre { grid-template-columns: 1fr; }
+  .sobre-visual { display: none; }
+  .sobre-content { padding: 4rem 3rem; }
+  .mosaic { grid-template-columns: repeat(2,1fr); }
+  .mosaic-item:nth-child(1) { grid-column: span 2; }
+  .team-grid { grid-template-columns: 1fr 1fr; }
+  .contacto-grid { grid-template-columns: 1fr; }
+  .gallery-lifestyle { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .gallery-item:first-child { grid-row: span 1; }
+  .insta-grid { grid-template-columns: repeat(3,1fr); }
+  #menu, #instalaciones, #comunidad, #equipo, #contacto { padding: 4rem 2rem; }
+  .valores { gap: 1rem; }
+}
+
+
+/* corner decorations */
+.lightbox-box::before, .lightbox-box::after {
+  content: '';
+  position: absolute;
+  width: 18px; height: 18px;
+  border-color: var(--gold);
+  border-style: solid;
+  z-index: 5;
+}
+.lightbox-box::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+.lightbox-box::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+
+/* ===== LIGHTBOX VINOS ===== */
+.vino-item { cursor: pointer; }
+.vino-item:hover .vino-nombre {
+  color: var(--gold-light);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+#lightbox-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(10, 8, 5, 0.93);
+  backdrop-filter: blur(10px);
+  justify-content: center; align-items: center;
+}
+#lightbox-overlay.open {
+  display: flex;
+  animation: lbFadeIn 0.35s ease;
+}
+@keyframes lbFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.lightbox-box {
+  position: relative;
+  max-width: 800px; width: 92%;
+  background: #100d09;
+  border: 1px solid var(--gold);
+  box-shadow: 0 0 80px rgba(201,168,76,0.15), inset 0 0 0 4px rgba(201,168,76,0.04);
+  animation: lbSlideUp 0.4s cubic-bezier(0.22,1,0.36,1);
+  overflow: hidden;
+}
+@keyframes lbSlideUp {
+  from { opacity: 0; transform: translateY(28px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* corner ornaments */
+.lightbox-box::before,
+.lightbox-box::after,
+.lb-corner-bl,
+.lb-corner-tr {
+  content: '';
+  position: absolute;
+  width: 20px; height: 20px;
+  border-color: var(--gold-light);
+  border-style: solid;
+  z-index: 6; pointer-events: none;
+}
+.lightbox-box::before { top: -1px;    left: -1px;  border-width: 2px 0 0 2px; }
+.lightbox-box::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+.lb-corner-bl { bottom: -1px; left: -1px;  border-width: 0 0 2px 2px; }
+.lb-corner-tr { top: -1px;   right: -1px; border-width: 2px 2px 0 0; }
+
+.lightbox-box img {
+  width: 100%; display: block;
+  max-height: 460px; object-fit: cover;
+  filter: brightness(0.88);
+}
+.lightbox-caption {
+  padding: 1.6rem 2rem 1.8rem;
+  border-top: 1px solid rgba(201,168,76,0.2);
+  display: flex; justify-content: space-between; align-items: flex-start;
+}
+.lightbox-caption .lb-left h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem; font-weight: 400;
+  color: var(--cream); margin-bottom: 0.3rem;
+}
+.lightbox-caption .lb-left .lb-origen {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.6rem; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--gold);
+}
+.lightbox-caption .lb-precio {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem; color: var(--gold-light);
+  white-space: nowrap; padding-left: 1.5rem;
+}
+.lightbox-close {
+  position: absolute; top: 0.9rem; right: 0.9rem;
+  width: 34px; height: 34px;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.35);
+  color: var(--gold); font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; z-index: 10;
+  transition: background 0.25s, transform 0.3s;
+}
+.lightbox-close:hover {
+  background: var(--gold); color: var(--dark);
+  transform: rotate(90deg);
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#inicio">Restaurante Trujillo</a>
+  <ul class="nav-links">
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#menu">Menú</a></li>
+    <li><a href="#instalaciones">Instalaciones</a></li>
+    <li><a href="#sobre">Sobre Nosotros</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- FLOATING CTA -->
+<div class="floating-cta" style="align-items: center;">
+  <a href="https://www.google.com/maps/place/Trujillo+Restaurante/@40.2371287,-3.7783602,3a,75y,321.51h,83.98t/data=!3m7!1e1!3m5!1sLBVMSHjoCC_TL-bmjad1JA!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D6.022880237441683%26panoid%3DLBVMSHjoCC_TL-bmjad1JA%26yaw%3D321.5065109109661!7i16384!8i8192!4m10!1m2!2m1!1srestaurante+trujillo!3m6!1s0xd41f52f57939513:0x5dd317443b945df4!8m2!3d40.2371982!4d-3.7784815!15sChRyZXN0YXVyYW50ZSB0cnVqaWxsb1oWIhRyZXN0YXVyYW50ZSB0cnVqaWxsb5IBCnJlc3RhdXJhbnSaASRDaGREU1VoTk1HOW5TMFZKUTBGblNVTktjbVZNUldkM1JSQULgAQD6AQQIABA4!16s%2Fg%2F1tmqn233?entry=ttu&g_ep=EgoyMDI2MDMwMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn-float primary">Cómo Llegar</a>
+</div>
+
+<!-- ===== INICIO ===== -->
+<section id="inicio">
+  <div class="carousel" id="mainCarousel">
+
+    <div class="carousel-slide active">
+      <img src="paella.jpg" alt="Plato principal" style="width:100%; " >
+    </div>
+    <div class="carousel-slide">
+      <img src="pulpo.jpg?w=1600&q=80" alt="Interior del restaurante">
+    </div>
+    <div class="carousel-slide">
+      <img src="rodaballo.jpg?w=1600&q=80" alt="Terraza">
+    </div>
+    <div class="carousel-slide">
+      <img src="espacio1.png?w=1600&q=80" alt="Plato elaborado">
+    </div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">Alta Cocina Mediterránea · Desde 1981</p>
+      <h1 class="hero-title">Donde cada <em>plato</em><br>es una historia</h1>
+      <p class="hero-sub">Ingredientes de temporada, técnica de vanguardia y el alma de nuestra tierra en cada bocado.</p>
+    </div>
+
+    <div class="carousel-dots" id="dots"></div>
+  </div>
+</section>
+
+<!-- ===== PLATO ESTRELLA ===== -->
+<section id="plato-estrella">
+  <div class="bg">
+    <img src="estrella2.png?w=1600&q=80" alt="Plato estrella">
+  </div>
+  <div class="estrella-content fade-up">
+    <div class="tag">⭐ Plato estrella</div>
+    <h2>Almejas <em>a la marinera</em><br></h2>
+    <p>Almejas al vapor en su propio jugo, bañadas en una sedosa salsa de ajo dorado y vino blanco, reposando sobre pizarra negra aún tibia. Intensidad marina, carácter atlántico y elegancia en cada concha. Una celebración del mar en estado puro.</p>
+    <!-- <p class="price-tag">34€ <span>por persona</span></p> -->
+  </div>
+</section>
+
+<!-- ===== MENÚ ===== -->
+<section id="menu">
+  <div class="section-header fade-up">
+    <p style="font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem;">Nuestra Propuesta</p>
+    <h2>El Menú</h2>
+    <div class="divider"></div>
+    <p>Cocina de mercado, ingredientes kilómetro cero y la pasión de nuestro equipo</p>
+  </div>
+
+  <div class="menu-btns fade-up">
+    <a href="#" class="btn-menu outlined btn-animated" id="btn-vinos" onclick="showTab('vinos', this); return false;">📄 Carta de Vinos</a>
+    <a href="#" class="btn-menu filled btn-animated active-tab" id="btn-carta" onclick="showTab('carta', this); return false;">📋 Carta Principal</a>
+  </div>
+
+  <!-- CARTA PRINCIPAL -->
+  <div class="tab-content" id="tab-carta">
+    <div class="mosaic fade-up">
+      <div class="mosaic-item">
+        <img src="carne-tro.png" alt="Carne">
+        <div class="mosaic-overlay"><div><h3>Chuleta</h3><p class="mprice"></p></div></div>
+      </div>
+      <div class="mosaic-item">
+        <img src="navajas.png" alt="Huevos rotos">
+        <div class="mosaic-overlay"><div><h3>navajas</h3><p class="mprice"></p></div></div>
+      </div>
+      <div class="mosaic-item">
+        <img src="https://images.unsplash.com/photo-1534482421-64566f976cfa?w=800&q=80" alt="Postre">
+        <div class="mosaic-overlay"><div><h3>Coulant de chocolate negro</h3><p class="mprice"></p></div></div>
+      </div>
+      <div class="mosaic-item">
+        <img src="pulpo2.png" alt="Ensalada">
+        <div class="mosaic-overlay"><div><h3>Pulpo</h3><p class="mprice"></p></div></div>
+      </div>
+      <div class="mosaic-item">
+        <img src="ensalada-gambas.png" alt="Carne">
+        <div class="mosaic-overlay"><div><h3>Ensalada de Gambas</h3><p class="mprice"></p></div></div>
+      </div>
+      <div class="mosaic-item">
+        <img src="jamon.png" alt="Pasta">
+        <div class="mosaic-overlay"><div><h3>Huevos rotos</h3><p class="mprice"></p></div></div>
+      </div>
+    </div>
+  </div>
+
+ <!-- CARTA DE VINOS -->
+  <div class="tab-content" id="tab-vinos" style="display:none;">
+    <div class="carta-vinos fade-up visible">
+
+      <div class="vinos-intro">
+        <p>Más de 300 referencias cuidadosamente seleccionadas. Blancos minerales, tintos con carácter y espumosos de celebración.</p>
+      </div>
+
+      <div class="vinos-grid">
+
+        <!-- RIBERA DEL DUERO -->
+        <div class="vino-categoria">
+          <h3 class="vino-cat-title">Ribera Del Duero</h3>
+          <div class="vino-list">
+            <div class="vino-item" onclick="openLightbox('https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=900&q=80','VILANO Roble','Tempranillo 100% / 6 meses Roble Americano / 13.5°','15€')">
+              <div class="vino-info"><span class="vino-nombre">VILANO Roble</span><span class="vino-origen">Tempranillo 100% / 6 meses Roble Americano / 13.5°</span></div>
+              <span class="vino-precio">15€</span>
+            </div>
+            <div class="vino-item" onclick="openLightbox('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80','VILANO Crianza','Tempranillo 100% / 14 meses Roble Francés y Americano / 13.5°','20€')">
+              <div class="vino-info"><span class="vino-nombre">VILANO Crianza</span><span class="vino-origen">Tempranillo 100% / 14 meses Roble Francés y Americano / 13.5°</span></div>
+              <span class="vino-precio">20€</span>
+            </div>
+            <div class="vino-item" onclick="openLightbox('https://images.unsplash.com/photo-1547595628-c61a29f496f0?w=900&q=80','Carmelo RODERO 9 meses','Tempranillo 100% / 9 meses Roble Americano / 13.5°','25€')">
+              <div class="vino-info"><span class="vino-nombre">Carmelo RODERO 9 meses</span><span class="vino-origen">Tempranillo 100% / 9 meses Roble Americano / 13.5°</span></div>
+              <span class="vino-precio">25€</span>
+            </div>
+            <div class="vino-item" onclick="openLightbox('https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=900&q=80','Pago CAPELLANES Roble','Tempranillo 100% / 5 meses Roble Francés / 14.5°','26€')">
+              <div class="vino-info"><span class="vino-nombre">Pago CAPELLANES Roble</span><span class="vino-origen">Tempranillo 100% / 5 meses Roble Francés / 14.5°</span></div>
+              <span class="vino-precio">26€</span>
+            </div>
+            <div class="vino-item" onclick="openLightbox('https://images.unsplash.com/photo-1474722883778-792e7990302f?w=900&q=80','Emilio MORO','Tempranillo 100% / 12 meses Roble Americano / 14.5°','33€')">
+              <div class="vino-info"><span class="vino-nombre">Emilio MORO</span><span class="vino-origen">Tempranillo 100% / 12 meses Roble Americano / 14.5°</span></div>
+              <span class="vino-precio">33€</span>
+            </div>
+            <div class="vino-item" onclick="openLightbox('https://images.unsplash.com/photo-1566552881560-0be862a7c445?w=900&q=80','Dominio de Basconcillos Crianza','Tempranillo 100% / 12 meses Roble Francés / 14°','30€')">
+              <div class="vino-info"><span class="vino-nombre">Dominio de Basconcillos Crianza</span><span class="vino-origen">Tempranillo 100% / 12 meses Roble Francés / 14°</span></div>
+              <span class="vino-precio">30€</span>
+            </div>
+            <div class="vino-item" onclick="openLightbox('https://images.unsplash.com/photo-1569919659476-f0852f6834b7?w=900&q=80','Pago de CARRAOVEJAS','Tempranillo 90%, Cab. Sauvignon 6%, Merlot 4% / 12 meses / 13°','49€')">
+              <div class="vino-info"><span class="vino-nombre">Pago de CARRAOVEJAS</span><span class="vino-origen">Tempranillo 90%, Cab. Sauvignon 6%, Merlot 4% / 12 meses / 13°</span></div>
+              <span class="vino-precio">49€</span>
+            </div>
+            <div class="vino-item" onclick="openLightbox('https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=900&q=80','Bosque de MATASNOS','90% Temp, 5% Merlot, 3% Malbec, 2% Garnacha / 12 meses / 15°','40€')">
+              <div class="vino-info"><span class="vino-nombre">Bosque de MATASNOS</span><span class="vino-origen">90% Temp, 5% Merlot, 3% Malbec, 2% Garnacha / 12 meses / 15°</span></div>
+              <span class="vino-precio">40€</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- D.O. RIOJA -->
+        <div class="vino-categoria">
+          <h3 class="vino-cat-title">D.O. Rioja</h3>
+          <div class="vino-list">
+            <div class="vino-item" onclick="openLightbox('https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=900&q=80','RAMON BILBAO Crianza','Tempranillo 100% / 14 meses Roble Americano / 14°','19,50€')">
+              <div class="vino-info"><span class="vino-nombre">RAMON BILBAO Crianza</span><span class="vino-origen">Tempranillo 100% / 14 meses Roble Americano / 14°</span></div>
+              <span class="vino-precio">19,50€</span>
+            </div>
+            <div class="vino-item" onclick="openLightbox('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80','LUIS CANAS Crianza','Tempranillo 95%, Garnacha 5% / 12 meses Roble Francés y Americano / 14°','20,50€')">
+              <div class="vino-info"><span class="vino-nombre">LUIS CANAS Crianza</span><span class="vino-origen">Tempranillo 95%, Garnacha 5% / 12 meses Roble Francés y Americano / 14°</span></div>
+              <span class="vino-precio">20,50€</span>
+            </div>
+            <div class="vino-item" onclick="openLightbox('https://images.unsplash.com/photo-1566552881560-0be862a7c445?w=900&q=80','MUGA','Tempranillo, Garnacha, Mazuelo, Graciano / 22 meses Roble Americano y Francés / 14°','31€')">
+              <div class="vino-info"><span class="vino-nombre">MUGA</span><span class="vino-origen">Tempranillo, Garnacha, Mazuelo, Graciano / 22 meses / 14°</span></div>
+              <span class="vino-precio">31€</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- BLANCOS -->
+        <div class="vino-categoria">
+          <h3 class="vino-cat-title">Blancos</h3>
+          <div class="vino-list">
+            <div class="vino-item" onclick="openLightbox('https://images.unsplash.com/photo-1513618827672-0d7c5ad591b1?w=900&q=80','Palacio de VIVERO','D.O. Rueda / Verdejo 100% / 12,5°','13€')">
+              <div class="vino-info"><span class="vino-nombre">Palacio de VIVERO //</span><span class="vino-origen">D.O. Rueda / Verdejo 100% / 12,5°</span></div>
+              <span class="vino-precio">13€</span>
+            </div>
+            <div class="vino-item" onclick="openLightbox('https://images.unsplash.com/photo-1516594798947-e65505dbb29d?w=900&q=80','JOSE PARIENTE','D.O. Rueda / Verdejo 100% / 13°','21,50€')">
+              <div class="vino-info"><span class="vino-nombre">JOSE PARIENTE</span><span class="vino-origen">D.O. Rueda / Verdejo 100% / 13°</span></div>
+              <span class="vino-precio">21,50€</span>
+            </div>
+            <div class="vino-item" onclick="openLightbox('https://images.unsplash.com/photo-1524863479829-916d8e77f114?w=900&q=80','YLLERA 5,5','D.O. Rueda / Verdejo 100% / 5,5°','17,50€')">
+              <div class="vino-info"><span class="vino-nombre">YLLERA 5,5</span><span class="vino-origen">D.O. Rueda / Verdejo 100% / 5,5°</span></div>
+              <span class="vino-precio">17,50€</span>
+            </div>
+            <div class="vino-item" onclick="openLightbox('https://images.unsplash.com/photo-1558618047-f4e60cba3c5e?w=900&q=80','ALMA','D.O. Madrid / Malvar 100% / 8,5°','14€')">
+              <div class="vino-info"><span class="vino-nombre">ALMA</span><span class="vino-origen">D.O. Madrid / Malvar 100% / 8,5°</span></div>
+              <span class="vino-precio">14€</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIAS BAIXAS -->
+        <div class="vino-categoria">
+          <h3 class="vino-cat-title">Rías Baixas</h3>
+          <div class="vino-list">
+            <div class="vino-item" onclick="openLightbox('https://images.unsplash.com/photo-1527281400683-1aefee4e5b8c?w=900&q=80','Pazo de VILLAREI','D.O. Rías Baixas / Albariño 100% / 12,5°','18,50€')">
+              <div class="vino-info"><span class="vino-nombre">Pazo de VILLAREI</span><span class="vino-origen">D.O. Rías Baixas / Albariño 100% / 12,5°</span></div>
+              <span class="vino-precio">18,50€</span>
+            </div>
+            <div class="vino-item" onclick="openLightbox('https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=900&q=80','Pazo de Villarei GODELLO','D.O. Valdeorras / Godello 100% / 13°','18,50€')">
+              <div class="vino-info"><span class="vino-nombre">Pazo de Villarei GODELLO</span><span class="vino-origen">D.O. Valdeorras / Godello 100% / 13°</span></div>
+              <span class="vino-precio">18,50€</span>
+            </div>
+            <div class="vino-item" onclick="openLightbox('https://images.unsplash.com/photo-1560512823-829485b8bf24?w=900&q=80','MARIETA','D.O. Rías Baixas / Albariño 100% / 12,5°','19€')">
+              <div class="vino-info"><span class="vino-nombre">MARIETA</span><span class="vino-origen">D.O. Rías Baixas / Albariño 100% / 12,5°</span></div>
+              <span class="vino-precio">19€</span>
+            </div>
+            <div class="vino-item" onclick="openLightbox('https://images.unsplash.com/photo-1474722883778-792e7990302f?w=900&q=80','MAR DE FRADES','D.O. Rías Baixas / Albariño 100% / 12,5°','29€')">
+              <div class="vino-info"><span class="vino-nombre">MAR DE FRADES</span><span class="vino-origen">D.O. Rías Baixas / Albariño 100% / 12,5°</span></div>
+              <span class="vino-precio">29€</span>
+            </div>
+            <div class="vino-item" onclick="openLightbox('https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=900&q=80','PACO Y LOLA','D.O. Rías Baixas / Albariño 100% / 12,5°','19€')">
+              <div class="vino-info"><span class="vino-nombre">PACO Y LOLA</span><span class="vino-origen">D.O. Rías Baixas / Albariño 100% / 12,5°</span></div>
+              <span class="vino-precio">19€</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== INSTALACIONES ===== -->
+<section id="instalaciones">
+  <div class="section-header fade-up">
+    <p style="font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem;">Nuestros Espacios</p>
+    <h2>Las Instalaciones</h2>
+    <div class="divider"></div>
+    <p>Cada rincón diseñado para que la experiencia sea completa</p>
+  </div>
+
+  <div class="gallery-lifestyle fade-up">
+    <div class="gallery-item">
+      <img src="espacio1.png?w=1600&q=80" alt="Salón principal">
+      <div class="gallery-label">Salón principal</div>
+    </div>
+    <div class="gallery-item">
+      <img src="establecimiento1.jpg?w=1600&q=80" alt="Terraza">
+      <div class="gallery-label">La Terraza</div>
+    </div>
+    <div class="gallery-item">
+      <img src="exterior1.png?w=1600&q=80" alt="Barra de vinos">
+      <div class="gallery-label">Exterior</div>
+    </div>
+    <div class="gallery-item">
+      <img src="terraza2.png?w=1600&q=80" alt="Sala privada">
+      <div class="gallery-label">La Terraza</div>
+    </div>
+    <div class="gallery-item">
+      <img src="interior1.png?w=1600&q=80" alt="Cocina abierta">
+      <div class="gallery-label">Salón principal</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== COMUNIDAD ===== -->
+<section id="comunidad">
+  <div class="section-header fade-up">
+    <p style="font-family: 'Montserrat', sans-serif; font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem;">@ivan.cerveceriatrujillo</p>
+    <h2>Quiénes nos visitan</h2>
+    <div class="divider"></div>
+    <p>La comunidad Trujillo — momentos compartidos por nuestros clientes</p>
+  </div>
+
+  <div class="insta-grid fade-up">
+    <div class="insta-item">
+      <img src="elias.png?w=1600&q=80" alt="post1">
+      <div class="insta-overlay">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        <span>@eliasdosunmu</span>
+      </div>
+    </div>
+    <div class="insta-item">
+      <img src="borja.png?w=1600&q=80" alt="post2">
+      <div class="insta-overlay">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        <span>@borjamayoral</span>
+      </div>
+    </div>
+    <div class="insta-item">
+      <img src="samutatu.png?w=1600&q=80" alt="post3">
+      <div class="insta-overlay">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        <span>@samurico_tattoo</span>
+      </div>
+    </div>
+    <div class="insta-item">
+      <img src="sergio_fernandez.png?w=1600&q=80" alt="post4">
+      <div class="insta-overlay">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        <span>@sergio_umami
+</span>
+      </div>
+    </div>
+    <div class="insta-item">
+      <img src="goyo.png?w=1600&q=80" alt="post5">
+      <div class="insta-overlay">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        <span>@goyogonzalezs</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SOBRE NOSOTROS ===== -->
+<section id="sobre">
+  <div class="sobre-visual">
+    <img src="truji.jpg" alt="Cocina">
+  </div>
+  <div class="sobre-content">
+    <div class="tag" style="color: var(--gold); border-color: var(--gold);">Nuestra Esencia</div>
+    <h2>La cocina como<br><em>forma de vida</em></h2>
+    <p>En el corazón de nuestra cocina late una historia que comenzó hace más de cuatro décadas. El 9 de enero de 1981, abrimos por primera vez las puertas de Restaurante Trujillo, con un sueño sencillo pero ambicioso: ofrecer a nuestra comunidad un lugar donde la buena mesa y el calor de hogar se encontrarán en cada plato.</p>
+    <p>Lo que empezó como un pequeño proyecto familiar, se ha convertido hoy en un referente gastronómico con más de 45 años de trayectoria. A lo largo de este tiempo, nuestras mesas han sido testigos de celebraciones, reencuentros y generaciones enteras que han crecido con nosotros.</p>
+
+    <div class="valores">
+      <div class="valor">
+        <span class="valor-num">45</span>
+        <span class="valor-label">Años de historia</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== CONTACTO ===== -->
+<section id="contacto">
+  <div style="max-width: 700px; margin: 0 auto;">
+    <div class="contacto-info fade-up">
+      <h2 style="text-align:center; margin-bottom: 2.5rem;">Visítanos</h2>
+
+      <div class="info-block">
+        <span class="label">Dirección</span>
+        <p>C. del Rio Jordan, 18<br>28980 Parla, Madrid</p>
+      </div>
+
+      <div class="info-block">
+        <span class="label">Teléfono</span>
+        <a href="tel:+34912345678">+34 916 05 09 24</a>
+      </div>
+
+      <div class="info-block">
+        <span class="label">Horarios</span>
+        <table class="horarios">
+          <tr><td>Lunes</td><td>12:00 – 17:00 · 20:00 – 00:30</td></tr>
+          <tr><td>Martes</td><td>12:00 – 17:00 · 20:00 – 00:30</td></tr>
+          <tr><td>Miercoles</td><td style="color: var(--rust);">Cerrado</td></tr>
+          <tr><td>Jueves</td><td>12:00 – 17:00 · 20:00 – 00:30</td></tr>
+          <tr><td>Viernes</td><td>12:00 – 17:00 · 20:00 – 00:30</td></tr>
+          <tr><td>Sábado</td><td>12:00 – 17:00 · 20:00 – 00:30</td></tr>
+          <tr><td>Domingo</td><td>12:00 – 17:00 · 20:00 – 00:30</td></tr>
+
+        </table>
+      </div>
+
+      <iframe
+        class="map-frame"
+        src="https://www.google.com/maps/embed?pb=!3m2!1ses!2ses!4v1772662802304!5m2!1ses!2ses!6m8!1m7!1sLBVMSHjoCC_TL-bmjad1JA!2m2!1d40.23712867354805!2d-3.778360239467607!3f321.5065109109661!4f-6.022880237441683!5f0.7820865974627469"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        frameborder="0">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Restaurante Trujillo</div>
+  <p class="footer-copy">© 2026 Restaurante Trujillo / AMECorp — Todos los derechos reservados</p>
+  <div class="footer-social">
+    <a href="https://www.instagram.com/restaurantetrujillo?igsh=cmtoeTV3eTMzZ295">Instagram</a>
+    <a href="https://www.facebook.com/ivan.cerveceriatrujillo/">Facebook</a>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js">
+// === LIGHTBOX ===
+function openLightbox(img, nombre, origen, precio) {
+  document.getElementById('lb-img').src = img;
+  document.getElementById('lb-nombre').textContent = nombre;
+  document.getElementById('lb-origen').textContent = origen;
+  document.getElementById('lb-precio').textContent = precio;
+  document.getElementById('lightbox-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(e) {
+  if (e.target === document.getElementById('lightbox-overlay')) closeLightboxDirect();
+}
+function closeLightboxDirect() {
+  document.getElementById('lightbox-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightboxDirect(); });
+
+</script><script>
+// === CAROUSEL ===
+const slides = document.querySelectorAll('.carousel-slide');
+const dotsContainer = document.getElementById('dots');
+let current = 0;
+let autoplay;
+
+slides.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.onclick = () => goTo(i);
+  dotsContainer.appendChild(d);
+});
+
+function goTo(n) {
+  slides[current].classList.remove('active');
+  dotsContainer.children[current].classList.remove('active');
+  current = n;
+  slides[current].classList.add('active');
+  dotsContainer.children[current].classList.add('active');
+}
+
+function next() { goTo((current + 1) % slides.length); }
+autoplay = setInterval(next, 5000);
+
+// === SCROLL ANIMATION ===
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// === TAB SWITCHER ===
+function showTab(tab, el) {
+  // hide all
+  document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
+  // remove active from all btns
+  document.querySelectorAll('.btn-menu').forEach(b => b.classList.remove('active-tab'));
+  // show selected
+  document.getElementById('tab-' + tab).style.display = 'block';
+  el.classList.add('active-tab');
+  // swap filled/outlined styles
+  if (tab === 'carta') {
+    document.getElementById('btn-carta').classList.remove('outlined'); document.getElementById('btn-carta').classList.add('filled');
+    document.getElementById('btn-vinos').classList.remove('filled'); document.getElementById('btn-vinos').classList.add('outlined');
+  } else {
+    document.getElementById('btn-vinos').classList.remove('outlined'); document.getElementById('btn-vinos').classList.add('filled');
+    document.getElementById('btn-carta').classList.remove('filled'); document.getElementById('btn-carta').classList.add('outlined');
+  }
+}
+
+
+
+
+// === NAV SCROLL ===
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  nav.style.padding = window.scrollY > 80 ? '0.8rem 4rem' : '1.2rem 4rem';
+});
+</script>
+
+
+    <img id="lb-img" src="" alt="">
+    <div class="lightbox-caption">
+      <h3 id="lb-nombre"></h3>
+      <span class="lb-origen" id="lb-origen"></span>
+      <span class="lb-precio" id="lb-precio"></span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== LIGHTBOX ===== -->
+<div id="lightbox-overlay" onclick="closeLightbox(event)">
+  <div class="lightbox-box">
+    <div class="lb-corner-bl"></div>
+    <div class="lb-corner-tr"></div>
+    <div class="lightbox-close" onclick="closeLightboxDirect()">✕</div>
+    <img id="lb-img" src="" alt="">
+    <div class="lightbox-caption">
+      <div class="lb-left">
+        <h3 id="lb-nombre"></h3>
+        <span class="lb-origen" id="lb-origen"></span>
+      </div>
+      <span class="lb-precio" id="lb-precio"></span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
