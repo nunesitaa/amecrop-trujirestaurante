@@ -608,8 +608,9 @@ footer {
   .nav-links { display: none; }
   .hero-content { padding: 0 3rem; }
   #sobre { grid-template-columns: 1fr; }
-  .sobre-visual { display: none; }
-  .sobre-content { padding: 4rem 3rem; }
+  .sobre-visual { display: block; height: 60vw; min-height: 260px; max-height: 420px; }
+  .sobre-visual img { min-height: unset; height: 100%; }
+  .sobre-content { padding: 3rem 2rem; }
   .mosaic { grid-template-columns: repeat(2,1fr); }
   .mosaic-item:nth-child(1) { grid-column: span 2; }
   .team-grid { grid-template-columns: 1fr 1fr; }
